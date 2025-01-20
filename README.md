@@ -37,6 +37,7 @@ A sophisticated AI chat application built with Next.js, featuring real-time conv
   - Support for YouTube transcripts
   - Google Books API integration
   - Custom data source tooling
+  - **Important**: Run `wxflows deploy` after any changes to tool definitions to update the deployment
 
 ### LangChain & LangGraph Features
 
@@ -107,13 +108,17 @@ cd ibm-ai-agent
 pnpm install
 ```
 
-3. Start the development server:
+3. Start the development servers:
 
 ```bash
+# Start the Next.js development server
 pnpm dev
+
+# In a separate terminal, start the Convex development server
+npx convex dev
 ```
 
-The application will be available at `http://localhost:3000`
+The application will be available at `http://localhost:3000`. The Convex development server (`npx convex dev`) is required to run alongside the Next.js server as it powers the real-time database functionality, handling features like live chat updates and message history persistence.
 
 ## Performance Optimizations
 
@@ -121,59 +126,3 @@ The application will be available at `http://localhost:3000`
 - Optimized token usage
 - Efficient streaming implementation
 - Smart context window management
-
-## Level Up Your Dev Career 🚀
-
-🔥 Want to earn $120k+/year as a developer? Our 1000+ students already are! Transform your career with the most comprehensive full-stack development program available!
-
-[Join Zero to Full Stack Hero 2.0 today!](https://www.papareact.com/course)
-
-### Why Join Zero to Full Stack Hero 2.0?
-
-- 🎓 **Complete Full-Stack Curriculum**
-
-  - Next.js 15, React, TypeScript, Tailwind CSS
-  - Backend development with Node.js
-  - Database management
-  - Authentication & Authorization (like this demo!)
-  - AI & SaaS modules
-  - Lifetime access
-  - Weekly coaching calls
-  - Complete project source code
-  - Exclusive Discord community
-  - So much more!
-
-- 👨‍🏫 **Live Coaching & Support**
-
-  - Weekly live sessions with Sonny Sangha
-  - Real-time problem solving
-  - Code reviews
-  - Career guidance
-  - Interview preparation
-
-- 💪 **Real-World Experience**
-
-  - 50+ practical projects
-  - 100+ coding challenges
-  - Industry-standard practices
-  - Portfolio building
-
-- 🤝 **Active Developer Community**
-  - 24/7 support in Discord
-  - Networking opportunities
-  - Code reviews
-  - Accountability partners
-  - Job opportunities
-
-### Success Stories
-
-- Developers landing $120k+ positions at PayPal
-- Students securing remote work opportunities worldwide
-- Career changers breaking into tech
-- Freelancers starting successful businesses
-
-[Join Zero to Full Stack Hero 2.0 Today!](https://www.papareact.com/course)
-
-> "The best investment in my development career" - Frank Ramos, Harvard Graduate & Senior Developer
-
-_This project is part of the Zero to Full Stack Hero 2.0 curriculum, showcasing advanced authentication patterns with Next.js and Auth0._

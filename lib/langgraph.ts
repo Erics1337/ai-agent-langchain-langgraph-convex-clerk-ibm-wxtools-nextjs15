@@ -26,6 +26,7 @@ const trimmer = trimMessages({
   maxTokens: 10,
   strategy: "last",
   tokenCounter: (msgs) => msgs.length,
+
   includeSystem: true,
   allowPartial: false,
   startOn: "human",
@@ -63,14 +64,14 @@ const initialiseModel = () => {
           console.log("🤖 End LLM call", output);
           const usage = output.llmOutput?.usage;
           if (usage) {
-            // console.log("📊 Token Usage:", {
-            //   input_tokens: usage.input_tokens,
-            //   output_tokens: usage.output_tokens,
-            //   total_tokens: usage.input_tokens + usage.output_tokens,
-            //   cache_creation_input_tokens:
-            //     usage.cache_creation_input_tokens || 0,
-            //   cache_read_input_tokens: usage.cache_read_input_tokens || 0,
-            // });
+            console.log("📊 Token Usage:", {
+              input_tokens: usage.input_tokens,
+              output_tokens: usage.output_tokens,
+              total_tokens: usage.input_tokens + usage.output_tokens,
+              cache_creation_input_tokens:
+                usage.cache_creation_input_tokens || 0,
+              cache_read_input_tokens: usage.cache_read_input_tokens || 0,
+            });
           }
         },
         // handleLLMNewToken: async (token: string) => {
@@ -114,9 +115,9 @@ const createWorkflow = () => {
       // Create the prompt template with system message and messages placeholder
       const promptTemplate = ChatPromptTemplate.fromMessages([
         new SystemMessage(systemContent, {
-          cache_control: { type: "ephemeral" },
+          cache_control: { type: "ephemeral" },// set a cache breakpoint
         }),
-        new MessagesPlaceholder("messages"),
+        new MessagesPlaceholder("messages"), // 
       ]);
 
       // Trim the messages to manage conversation history
@@ -137,6 +138,11 @@ const createWorkflow = () => {
 };
 
 function addCachingHeaders(messages: BaseMessage[]): BaseMessage[] {
+  // Rules of caching headers for turn-by-turn conversations
+  // 1. Cache the first SYSTEM message
+  // 2. Cache the LAST message
+  // 3. Cache the second to last HUMAN message
+  
   if (!messages.length) return messages;
 
   // Create a copy of messages to avoid mutating the original
@@ -172,7 +178,6 @@ function addCachingHeaders(messages: BaseMessage[]): BaseMessage[] {
 
   return cachedMessages;
 }
-
 export async function submitQuestion(messages: BaseMessage[], chatId: string) {
   // Add caching headers to messages
   const cachedMessages = addCachingHeaders(messages);
