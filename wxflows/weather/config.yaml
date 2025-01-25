@@ -1,0 +1,4 @@
+configurationset:
+  - configuration:
+      name: openweathermap
+      appid: bc757d1065a41df9a0e6c290eeb1126e

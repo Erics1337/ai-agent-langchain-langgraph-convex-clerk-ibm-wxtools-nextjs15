@@ -40,6 +40,7 @@ const toolClient = new wxflows({
 
 // Retrieve the tools
 const tools = await toolClient.lcTools;
+console.log('Available tools:', tools);  // Add this line to inspect the tools
 const toolNode = new ToolNode(tools);
 
 // Connect to the LLM provider with better tool instructions

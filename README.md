@@ -34,9 +34,8 @@ A sophisticated AI chat application built with Next.js, featuring real-time conv
 
 - **wxflows Integration**:
   - Quick integration of various data sources
-  - Support for YouTube transcripts
-  - Google Books API integration
   - Custom data source tooling
+  - Custom tool integration
   - **Important**: Run `wxflows deploy` after any changes to tool definitions to update the deployment
 
 ### LangChain & LangGraph Features

@@ -1,0 +1,5 @@
+configurationset:
+  - name: rest_default
+    type: rest
+    headers:
+      Accept: application/json

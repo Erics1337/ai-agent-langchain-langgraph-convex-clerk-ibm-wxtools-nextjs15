@@ -1,0 +1,82 @@
+scalar JSON
+
+type AvalancheProblem {
+  id: ID!
+  rank: Int
+  likelihood: String
+  discussion: String
+  location: [String]
+  size: [String]
+  name: String
+  problem_description: String
+  icon: String
+}
+
+type DangerRating {
+  lower: Int
+  middle: Int
+  upper: Int
+  valid_day: String
+}
+
+type ForecastZone {
+  id: ID!
+  name: String
+  url: String
+  state: String
+  zone_id: String
+}
+
+type WeatherConditions {
+  temperature: Float
+  wind_speed: Float
+  wind_direction: String
+  precipitation: String
+}
+
+type AvalancheForecast {
+  id: ID!
+  published_time: String
+  expires_time: String
+  created_at: String
+  updated_at: String
+  author: String
+  product_type: String
+  bottom_line: String
+  hazard_discussion: String
+  forecast_avalanche_problems: [AvalancheProblem]
+  danger: [DangerRating]
+  forecast_zone: [ForecastZone]
+  weather: WeatherConditions
+}
+
+type Query {
+  """
+  Get avalanche forecast data from avalanche.org API.
+  For Crested Butte, use center_id='CBAC' and zone_id='2119'.
+  Returns forecast with danger ratings, avalanche problems, and discussion.
+  """
+  get_avalanche_forecast(
+    "Avalanche center ID (e.g. 'CBAC' for Crested Butte)"
+    center_id: String = "CBAC"
+    "Zone ID within the center (e.g. '2119' for Crested Butte)"
+    zone_id: String = "2119"
+  ): AvalancheForecast
+    @rest(
+      endpoint: "https://api.avalanche.org/v2/public/product?type=forecast&center_id=$center_id&zone_id=$zone_id"
+      setters: [
+        { field: "id", path: "id" },
+        { field: "published_time", path: "published_time" },
+        { field: "expires_time", path: "expires_time" },
+        { field: "created_at", path: "created_at" },
+        { field: "updated_at", path: "updated_at" },
+        { field: "author", path: "author" },
+        { field: "product_type", path: "product_type" },
+        { field: "bottom_line", path: "bottom_line" },
+        { field: "hazard_discussion", path: "hazard_discussion" },
+        { field: "forecast_avalanche_problems", path: "forecast_avalanche_problems" },
+        { field: "danger", path: "danger" },
+        { field: "forecast_zone", path: "forecast_zone" }
+      ]
+    )
+}
